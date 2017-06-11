@@ -1,7 +1,6 @@
 module ElmCounter exposing (..)
 
 import Html exposing (..)
-import Html.Attributes exposing (class, type_)
 import Html.Events exposing (onClick)
 
 
@@ -20,6 +19,16 @@ initialModel =
     }
 
 
+update : Msg -> Model -> Model
+update msg model =
+    case msg of
+        Increment ->
+            { model | counter = model.counter + 1 }
+
+        Decrement ->
+            { model | counter = model.counter - 1 }
+
+
 view : Model -> Html Msg
 view model =
     div
@@ -33,6 +42,10 @@ view model =
         ]
 
 
-main : Html Msg
+main : Program Never Model Msg
 main =
-    view initialModel
+    Html.beginnerProgram
+        { model = initialModel
+        , view = view
+        , update = update
+        }
